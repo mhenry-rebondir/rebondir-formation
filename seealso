@@ -1,0 +1,20 @@
+
+
+
+helm package ./helm
+
+
+helm upgrade --install poc-moodle -n rebondir-formation ./moodle-0.1.0.tgz -f poc.yaml
+
+
+php admin/cli/install.php
+- http://moodle.caminade.fr:31218
+- poc-moodle-postgres.rebondir-formation
+- 5432
+- moodle
+- 6EWbIDIahU7guKi4LFHieQGKvN9gUFgDOToeycSA15I=
+
+chown -R www-data:www-data /var/www/html
+
+
+helm uninstall poc-moodle -n rebondir-formation

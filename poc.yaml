@@ -1,0 +1,36 @@
+replicaCount: 1
+
+image:
+  repository: mikaelrebondir/rebondir  # Ou ton image customisée basée sur moodlehq
+  tag: "5.3.3"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 80
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "500M" # Indispensable pour les gros fichiers de cours
+  hosts:
+    - host: moodle.caminade.fr
+      paths:
+        - path: /
+          pathType: Prefix
+
+env:
+  database:
+    host: "postgres.database.svc.cluster.local"
+    name: "moodle"
+    user: "moodle"
+    # Le mot de passe sera injecté via un Secret Kubernetes existant
+  redis:
+    host: "redis-master.cache.svc.cluster.local"
+    port: 6379
+  s3:
+    enabled: true
+    region: "us-east-1"
+    bucket: "moodle-filestore"
+    endpoint: "https://s3.fr-par.scw.cloud" # Exemple avec un S3 compatible (Scaleway, MinIO, etc.)

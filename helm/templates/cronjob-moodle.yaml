@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "moodle.fullname" . }}-cron
+spec:
+  schedule: "* * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: moodle-cron
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              command: ["php", "/var/www/html/admin/cli/cron.php"]
+              envFrom:
+                - secretRef:
+                    name: moodle-secrets

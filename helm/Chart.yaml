@@ -1,0 +1,20 @@
+apiVersion: v2
+name: moodle
+description: Chart Helm Moodle Stateless et Scalable (sans Bitnami)
+type: application
+
+# Version de l'application Moodle sous-jacente
+appVersion: "4.3.0"
+
+# Version du Chart Helm (à incrémenter lors de tes mises à jour)
+version: 0.1.0
+
+keywords:
+  - moodle
+  - lms
+  - education
+  - k8s
+  - stateless
+
+maintainers:
+  - name: Platform Team
