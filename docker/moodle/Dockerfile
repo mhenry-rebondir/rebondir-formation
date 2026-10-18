@@ -24,6 +24,30 @@ RUN curl -SL https://packaging.moodle.org/stable${MOODLE_VERSION}/moodle-latest-
     && chown -R www-data:www-data /var/www/html
 
 # Configuration Nginx basique pour Moodle et PHP-FPM
+    # server {
+    #     listen 80;
+    #     server_name moodle.caminade.fr;
+    #     root /var/www/html/public;
+
+    #     index index.php index.html;
+
+    #     # Gestion propre des fichiers statiques pour éviter les 404 / redirections HTML
+    #     location ~* \.(ico|css|js|gif|jpe?g|png|woff2?|eot|ttf|svg)$ {
+    #         expires 7d;
+    #         access_log off;
+    #         try_files $uri =404;
+    #     }
+
+    #     location / {
+    #         try_files $uri $uri/ /index.php?$query_string;
+    #     }
+
+    #     location ~ \.php$ {
+    #         include fastcgi_params;
+    #         fastcgi_pass 127.0.0.1:9000;
+    #         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    #     }
+    # }
 RUN echo 'server { \
     listen 80; \
     root /var/www/html; \
